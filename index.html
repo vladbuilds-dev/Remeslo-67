@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>REMESLO · Dream University 67</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800;900&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#f4c95d; --gold-2:#e8a51c; --deep:#1a0e2e; --deep-2:#2a1245;
+    --wine:#4a0e2a; --teal:#0f5c5c; --cream:#fff4dd; --diamond:#bff0ff;
+    --shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Rubik',system-ui,sans-serif;color:var(--cream);background:var(--deep);overflow-x:hidden}
+  ::selection{background:var(--gold);color:var(--deep)}
+  .ornament{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.10;
+    background-image:radial-gradient(circle at 12px 12px,var(--gold) 2px,transparent 3px),radial-gradient(circle at 36px 36px,var(--gold) 2px,transparent 3px);
+    background-size:48px 48px;}
+  .deck{position:relative;z-index:1;scroll-snap-type:y proximity}
+  section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;text-align:center;position:relative;scroll-snap-align:start}
+  h1,h2{font-family:'Rubik';font-weight:900;line-height:1.02}
+  #hero{background:radial-gradient(1200px 600px at 50% -10%,rgba(244,201,93,.25),transparent 60%),linear-gradient(180deg,#2a1245,#1a0e2e 70%,#0d0718)}
+  .kicker{letter-spacing:.5em;font-size:14px;font-weight:600;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+  .brand{font-size:clamp(48px,11vw,140px);font-weight:900;background:linear-gradient(180deg,#fff7e0,var(--gold),var(--gold-2));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 4px 30px rgba(244,201,93,.35);letter-spacing:.02em}
+  .sub{margin-top:6px;font-size:clamp(15px,2.4vw,22px);color:#e8d9b8;font-weight:600}
+  .loc{margin-top:14px;font-size:15px;color:var(--diamond);letter-spacing:.15em}
+  .building{width:min(560px,92vw);height:auto;margin:10px 0 0;filter:drop-shadow(0 26px 34px rgba(0,0,0,.6))}
+  .building .float{animation:bob 4s ease-in-out infinite}
+  .hint{position:absolute;bottom:28px;font-size:13px;color:#b9a26e;letter-spacing:.2em;animation:bob 2s infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+  .badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+  .badge{background:rgba(244,201,93,.12);border:1px solid rgba(244,201,93,.4);color:var(--gold);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;backdrop-filter:blur(6px)}
+  #hall{background:linear-gradient(180deg,#0d0718,#2a1245)}
+  .hallwrap{max-width:900px}
+  .art{width:min(320px,72vw);height:auto}
+  .kazan-svg{animation:steam 3s ease-in-out infinite;filter:drop-shadow(0 18px 24px rgba(0,0,0,.55))}
+  @keyframes steam{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}
+  .churchhela{font-size:clamp(30px,7vw,60px);letter-spacing:.1em;margin-top:6px}
+  .diamonds{font-size:clamp(24px,6vw,48px);letter-spacing:.2em;margin-top:8px;animation:twinkle 2s infinite}
+  @keyframes twinkle{0%,100%{filter:drop-shadow(0 0 6px var(--diamond))}50%{filter:drop-shadow(0 0 22px var(--diamond)) brightness(1.3)}}
+  h2.title{font-size:clamp(30px,6vw,64px);margin-bottom:8px}
+  .accent{color:var(--gold)}
+  .lead{max-width:660px;color:#e8d9b8;font-size:clamp(15px,2.2vw,19px);line-height:1.6;margin-top:14px}
+  #fac{background:linear-gradient(180deg,#2a1245,#1a0e2e)}
+  .grid{display:grid;gap:22px;max-width:1000px;width:100%;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:34px}
+  .card{background:linear-gradient(160deg,rgba(74,14,42,.6),rgba(42,18,69,.8));border:1px solid rgba(244,201,93,.35);border-radius:22px;padding:30px 24px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0;opacity:.08;background:radial-gradient(circle at 20% 0,var(--gold),transparent 60%)}
+  .card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 30px 70px rgba(244,201,93,.2)}
+  .card svg{width:96px;height:96px}
+  .card h3{font-size:24px;margin:14px 0 8px;color:var(--gold)}
+  .card p{color:#dcc9a6;font-size:14px;line-height:1.5}
+  #perk{background:linear-gradient(180deg,#1a0e2e,#0f3d3d)}
+  .cooper{width:min(360px,80vw);height:auto;animation:drive 4s ease-in-out infinite;filter:drop-shadow(0 16px 20px rgba(0,0,0,.5))}
+  @keyframes drive{0%{transform:translateX(-26px)}50%{transform:translateX(26px)}100%{transform:translateX(-26px)}}
+  .bounce{animation:bounce .5s ease-in-out infinite alternate;transform-origin:center bottom}
+  @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+  #staff{background:linear-gradient(180deg,#0f3d3d,#123a52)}
+  #profs{background:linear-gradient(180deg,#123a52,#1a0e2e)}
+  .staffgrid{display:grid;gap:18px;max-width:1050px;width:100%;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:30px}
+  .person{background:rgba(255,244,221,.05);border:1px solid rgba(244,201,93,.25);border-radius:18px;padding:18px 14px;transition:.25s}
+  .person:hover{background:rgba(244,201,93,.1);transform:translateY(-6px) rotate(-1deg)}
+  .person svg{width:84px;height:84px}
+  .person .nm{font-weight:800;margin-top:8px;font-size:16px}
+  .person .role{color:var(--gold);font-size:12px;margin-top:4px;font-weight:600}
+  .tag{display:inline-block;margin-top:14px;font-size:12px;letter-spacing:.15em;color:#9fd7ff;border:1px solid rgba(159,215,255,.35);padding:5px 12px;border-radius:999px}
+  #boss{background:radial-gradient(1000px 700px at 50% 40%,#6a0f38,#1a0e2e 70%)}
+  .boss-svg{width:min(240px,60vw);height:auto;animation:shake .12s infinite alternate}
+  .bossname{font-size:clamp(48px,13vw,150px);font-weight:900;background:linear-gradient(90deg,#ff5f6d,var(--gold),#ff5f6d);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:6px}
+  @keyframes shake{from{transform:translate(-2px,1px) rotate(-.6deg)}to{transform:translate(2px,-1px) rotate(.6deg)}}
+  .hpbar{width:min(520px,90%);height:26px;border:2px solid var(--gold);border-radius:14px;margin-top:20px;overflow:hidden;background:rgba(0,0,0,.4)}
+  .hp{height:100%;width:100%;background:linear-gradient(90deg,#ff5f6d,#ff9d5c);transition:width .4s}
+  .fightbtn{margin-top:24px;background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#3a1400;border:none;padding:16px 34px;border-radius:999px;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 12px 30px rgba(244,201,93,.4);transition:transform .15s}
+  .fightbtn:hover{transform:scale(1.06)}
+  .fightbtn:active{transform:scale(.95)}
+  .bosslog{margin-top:16px;min-height:24px;color:var(--gold);font-weight:600}
+  .dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:12px}
+  .dot{width:11px;height:11px;border-radius:50%;border:2px solid var(--gold);background:transparent;cursor:pointer;transition:.2s}
+  .dot.on{background:var(--gold);transform:scale(1.3)}
+  footer{padding:40px;text-align:center;color:#8b7a52;font-size:13px;background:#0d0718}
+  .confetti{position:fixed;top:-10px;font-size:22px;z-index:50;pointer-events:none}
+
+  /* ===== extra content ===== */
+  #about{background:linear-gradient(180deg,#1a0e2e,#241338)}
+  #day{background:linear-gradient(180deg,#241338,#0f3446)}
+  #life{background:linear-gradient(180deg,#0f3446,#1a0e2e)}
+  #stats{background:linear-gradient(180deg,#1a0e2e,#2a1245)}
+  #facts{background:linear-gradient(180deg,#2a1245,#0f3d3d)}
+  .prose{max-width:760px;text-align:left;margin-top:18px}
+  .prose p{color:#e8d9b8;font-size:clamp(15px,2.1vw,18px);line-height:1.7;margin-top:14px}
+  .prose p b{color:var(--gold)}
+  .quote{max-width:720px;margin:26px auto 0;font-family:'Amiri',serif;font-size:clamp(20px,3.4vw,32px);color:var(--gold);line-height:1.4}
+  .quote small{display:block;font-family:'Rubik';font-size:14px;color:#b9a26e;margin-top:10px;letter-spacing:.1em}
+  .timeline{max-width:640px;width:100%;margin-top:30px;text-align:left}
+  .tl{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed rgba(244,201,93,.25)}
+  .tl .t{color:var(--gold);font-weight:800;min-width:74px;font-variant-numeric:tabular-nums}
+  .tl .d{color:#e8d9b8;font-size:15px;line-height:1.5}
+  .tl .e{font-size:24px}
+  .statgrid{display:grid;gap:20px;max-width:960px;width:100%;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-top:34px}
+  .stat{background:rgba(244,201,93,.07);border:1px solid rgba(244,201,93,.3);border-radius:20px;padding:26px 18px}
+  .stat .n{font-size:clamp(34px,6vw,52px);font-weight:900;background:linear-gradient(180deg,#fff7e0,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .l{color:#dcc9a6;font-size:13px;margin-top:6px;line-height:1.4}
+  .factlist{max-width:760px;width:100%;margin-top:28px;text-align:left;display:grid;gap:14px}
+  .fact{display:flex;gap:14px;background:rgba(255,244,221,.04);border:1px solid rgba(244,201,93,.22);border-radius:16px;padding:16px 18px}
+  .fact .ic{font-size:26px}
+  .fact .tx{color:#e8d9b8;font-size:15px;line-height:1.55}
+  .fact .tx b{color:var(--gold)}
+
+
+  #play{background:radial-gradient(1000px 700px at 50% 30%,#123a52,#1a0e2e 70%)}
+  .qrcard{margin-top:26px;background:#fff;border-radius:24px;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 0 4px var(--gold);display:inline-block}
+  .qrimg{width:min(300px,72vw);height:auto;display:block;border-radius:8px}
+  .qrurl{margin-top:18px;font-family:monospace;font-size:clamp(13px,2.4vw,17px);color:var(--diamond);letter-spacing:.02em;word-break:break-all}
+  .playbtn{margin-top:22px;display:inline-block;background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#3a1400;text-decoration:none;padding:16px 34px;border-radius:999px;font-size:18px;font-weight:800;box-shadow:0 12px 30px rgba(244,201,93,.4);transition:transform .15s}
+  .playbtn:hover{transform:scale(1.06)}
+
+</style>
+</head>
+<body>
+<div class="ornament"></div>
+<nav class="dots" id="dots"></nav>
+
+<!-- ==== reusable funny face defs ==== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="eyes-googly">
+      <circle cx="-11" cy="-4" r="9" fill="#fff"/><circle cx="11" cy="-4" r="9" fill="#fff"/>
+      <circle cx="-9" cy="-2" r="4" fill="#111"/><circle cx="13" cy="-2" r="4" fill="#111"/>
+    </g>
+  </defs>
+</svg>
+
+<main class="deck" id="deck">
+  <section id="hero">
+    <div class="kicker">the dream university</div>
+    <div class="brand">REMESLO</div>
+    <div class="sub">حرفة · where students are forged into masters</div>
+    <div class="loc">📍 SAMARKAND · THE GREAT SILK ROAD</div>
+
+    <!-- Oriental palace shaped around 67 -->
+    <svg class="building" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+      <g class="float">
+        <!-- sky diamonds -->
+        <text x="60" y="40" font-size="26">💎</text>
+        <text x="470" y="52" font-size="22">💎</text>
+        <!-- towers -->
+        <rect x="70" y="120" width="70" height="150" rx="8" fill="#3a1d5e" stroke="#f4c95d" stroke-width="3"/>
+        <rect x="420" y="120" width="70" height="150" rx="8" fill="#3a1d5e" stroke="#f4c95d" stroke-width="3"/>
+        <path d="M70 120 q35 -55 70 0 Z" fill="#f4c95d"/>
+        <path d="M420 120 q35 -55 70 0 Z" fill="#f4c95d"/>
+        <circle cx="105" cy="62" r="7" fill="#e8a51c"/><circle cx="455" cy="62" r="7" fill="#e8a51c"/>
+        <!-- main body -->
+        <rect x="150" y="150" width="260" height="120" rx="10" fill="#4a2170" stroke="#f4c95d" stroke-width="3"/>
+        <!-- big central dome -->
+        <path d="M180 150 q100 -120 200 0 Z" fill="#0f8a8a" stroke="#f4c95d" stroke-width="3"/>
+        <circle cx="280" cy="42" r="9" fill="#f4c95d"/>
+        <!-- glowing 67 sign on facade -->
+        <rect x="205" y="185" width="150" height="66" rx="10" fill="#120a22" stroke="#bff0ff" stroke-width="2"/>
+        <text x="280" y="238" text-anchor="middle" font-family="Rubik, sans-serif" font-weight="900" font-size="52" fill="#f4c95d">67</text>
+        <!-- little windows -->
+        <g fill="#ffd873">
+          <rect x="92" y="150" width="12" height="18" rx="3"/><rect x="112" y="150" width="12" height="18" rx="3"/>
+          <rect x="442" y="150" width="12" height="18" rx="3"/><rect x="462" y="150" width="12" height="18" rx="3"/>
+        </g>
+        <!-- ground -->
+        <rect x="40" y="270" width="480" height="10" rx="5" fill="#2a1245"/>
+      </g>
+    </svg>
+    <div class="sub">The main campus — built literally in the shape of <b>67</b> 🕌</div>
+    <div class="badges">
+      <span class="badge">🍚 Unlimited plov</span>
+      <span class="badge">💎 Scholarship paid in diamonds</span>
+      <span class="badge">🚗 A Mini Cooper for everyone</span>
+      <span class="badge">📝 An exam every single day</span>
+    </div>
+    <div class="hint">↓ scroll / arrow keys / dots on the right ↓</div>
+  </section>
+
+  <section id="hall">
+    <div class="hallwrap">
+      <h2 class="title">The Grand <span class="accent">Hall</span></h2>
+      <!-- Kazan with plov + steam + googly eyes -->
+      <svg class="art kazan-svg" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+        <!-- steam -->
+        <path d="M70 34 q-10 -14 4 -24 q10 -8 2 -22" stroke="#cbb6ff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path d="M100 30 q-10 -14 4 -24 q10 -8 2 -22" stroke="#cbb6ff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path d="M130 34 q-10 -14 4 -24 q10 -8 2 -22" stroke="#cbb6ff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/>
+        <!-- rice mound -->
+        <ellipse cx="100" cy="70" rx="66" ry="26" fill="#ffe9b0"/>
+        <!-- carrots & bits -->
+        <g>
+          <ellipse cx="78" cy="66" rx="8" ry="4" fill="#ff9d3c" transform="rotate(-20 78 66)"/>
+          <ellipse cx="120" cy="64" rx="8" ry="4" fill="#ff9d3c" transform="rotate(25 120 64)"/>
+          <circle cx="100" cy="60" r="4" fill="#7a3b16"/>
+          <circle cx="92" cy="70" r="3" fill="#c0392b"/>
+          <circle cx="112" cy="72" r="3" fill="#7a3b16"/>
+        </g>
+        <!-- kazan body -->
+        <path d="M28 78 q72 46 144 0 q-14 78 -72 78 q-58 0 -72 -78 Z" fill="#2b2b2b" stroke="#f4c95d" stroke-width="3"/>
+        <ellipse cx="100" cy="78" rx="72" ry="16" fill="#3a3a3a" stroke="#f4c95d" stroke-width="3"/>
+        <!-- googly eyes on the kazan -->
+        <g transform="translate(100,120)"><use href="#eyes-googly"/></g>
+        <path d="M84 138 q16 12 32 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div class="churchhela">🟤🟤🟤 churchkhela 🟤🟤🟤</div>
+      <div class="diamonds">💎 💎 💎 💎 💎</div>
+      <p class="lead">At the heart of the hall stands a <b>giant kazan full of plov</b> that never runs empty. Garlands of <b>churchkhela</b> hang from the ceiling, and the walls are inlaid with <b>diamonds</b>. All of it built around the number <b class="accent">67</b>.</p>
+    </div>
+  </section>
+
+  <section id="fac">
+    <h2 class="title">Our <span class="accent">Faculties</span></h2>
+    <p class="lead">Three schools of mastery under one gilded roof.</p>
+    <div class="grid">
+      <div class="card">
+        <svg viewBox="0 0 100 100"><ellipse cx="50" cy="86" rx="34" ry="8" fill="#000" opacity=".3"/><path d="M30 86 q-6 -40 20 -40 q26 0 20 40 Z" fill="#c96a1b"/><path d="M50 50 q-10 -18 0 -30 q10 12 0 30" fill="#ff7b2e"/><path d="M50 54 q-7 -12 0 -22 q7 10 0 22" fill="#ffd24a"/><g transform="translate(50,74)"><use href="#eyes-googly"/></g></svg>
+        <h3>Faculty of Tandyr</h3><p>The ancient art of fire and bread. Thesis project: the perfect samsa.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 100 100"><ellipse cx="50" cy="84" rx="30" ry="6" fill="#000" opacity=".3"/><ellipse cx="50" cy="60" rx="34" ry="16" fill="#fff"/><path d="M16 60 q34 26 68 0 q-6 20 -34 20 q-28 0 -34 -20Z" fill="#e0e0e0"/><circle cx="50" cy="50" r="12" fill="#ffd24a"/><g transform="translate(50,58) scale(.8)"><use href="#eyes-googly"/></g></svg>
+        <h3>Culinary Academy</h3><p>From plov to haute cuisine. Tastings instead of quizzes, the kazan as your alma mater.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 100 100"><rect x="22" y="26" width="56" height="48" rx="6" fill="#123a52" stroke="#f4c95d" stroke-width="3"/><rect x="40" y="74" width="20" height="8" fill="#f4c95d"/><rect x="32" y="82" width="36" height="6" rx="3" fill="#f4c95d"/><g transform="translate(50,46) scale(.9)"><use href="#eyes-googly"/></g><text x="50" y="66" text-anchor="middle" font-size="12" fill="#9fd7ff" font-family="monospace">01101</text></svg>
+        <h3>AMCS</h3><p>Applied Mathematics &amp; Computer Science. Algorithms, AI and code.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="about">
+    <h2 class="title">The Philosophy of <span class="accent">Remeslo</span></h2>
+    <div class="quote">اَلْعِلْمُ نُورٌ<br><span style="font-family:'Rubik';font-size:.7em;color:#e8d9b8">"Knowledge is light"</span><small>— carved above the gates of Building 67</small></div>
+    <div class="prose">
+      <p><b>Remeslo</b> (Russian for "craft") was founded on one radical idea from the old Samarkand bazaars: you do not <i>study</i> a trade, you are <b>apprenticed</b> to it. No lecture halls full of sleeping students — every class is a workshop, every professor is a master, and every student leaves with something they made with their own hands.</p>
+      <p>The whole campus is shaped like the number <b>67</b> — not because it means anything, but because the founder saw it in a dream next to a plate of plov and decided that was a sign. The "6" holds the kitchens and forges; the "7" holds the labs and lecture domes; the bridge between them is the Grand Hall with the eternal kazan.</p>
+      <p>Tuition is free. The catch: <b>an exam every single day</b> at 09:00. Pass, and you keep your Mini Cooper, your diamond stipend and your seat at the plov table. Fail three days in a row, and you are sent to defeat the recruitment boss <b>Brymdyshch</b> to earn your way back in.</p>
+    </div>
+  </section>
+
+  <section id="day">
+    <h2 class="title">A Day at <span class="accent">67</span></h2>
+    <p class="lead">Every day is the same ritual — and somehow never boring.</p>
+    <div class="timeline">
+      <div class="tl"><span class="e">🌅</span><span class="t">07:30</span><span class="d">Sunrise plov in the Grand Hall. The kazan is refilled while you sleep — nobody has ever seen it empty.</span></div>
+      <div class="tl"><span class="e">📝</span><span class="t">09:00</span><span class="d">The Daily Exam. Could be calculus, could be folding the perfect samsa. You never know until the bell rings.</span></div>
+      <div class="tl"><span class="e">🔥</span><span class="t">11:00</span><span class="d">Workshops. Fire at Tandyr, knives at the Culinary Academy, keyboards at AMCS.</span></div>
+      <div class="tl"><span class="e">⚽</span><span class="t">14:00</span><span class="d">P.E. with Professor Ronaldo. Warm-up is 700 sit-ups. Cool-down is a single, deafening "SIUUU".</span></div>
+      <div class="tl"><span class="e">🍫</span><span class="t">16:00</span><span class="d">Elective: "Glass Wool & Chocolate" with MrBeast. Attendance rewarded in cash, obviously.</span></div>
+      <div class="tl"><span class="e">🚗</span><span class="t">18:00</span><span class="d">Mini Cooper hour. Students drift around the "7" wing. Fuel is on the university.</span></div>
+      <div class="tl"><span class="e">💎</span><span class="t">21:00</span><span class="d">Diamond stipend handout under the central dome, then chai and churchkhela until midnight.</span></div>
+    </div>
+  </section>
+
+  <section id="life">
+    <h2 class="title">Campus <span class="accent">Life</span></h2>
+    <div class="prose">
+      <p><b>The Grand Hall</b> is the beating heart of Remeslo: carpets from every region of the Silk Road, a ceiling dripping with churchkhela garlands, and walls literally set with diamonds (do not pry them off — the boss <b>Brymdyshch</b> counts them nightly).</p>
+      <p><b>Dorms</b> are in the two towers. The left tower smells permanently of cumin and warm bread; the right tower hums with servers and the click of mechanical keyboards. Everyone agrees the left tower has the better parties.</p>
+      <p><b>Clubs</b> include the Kazan Society, the SIUUU Sprint Team, competitive Samsa-folding, and a secretive math circle that meets inside the glowing "67" sign after dark. <b>Rumour:</b> members solve one impossible problem per semester and are rewarded in raw diamonds.</p>
+      <p>The unofficial motto whispered between students: <i>"survive the 09:00, and the rest of the day is a feast."</i></p>
+    </div>
+  </section>
+
+  <section id="perk">
+    <h2 class="title">A <span class="accent">Mini Cooper</span> for every student</h2>
+    <!-- Funny Mini Cooper -->
+    <svg class="cooper" viewBox="0 0 260 150" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="130" cy="132" rx="105" ry="10" fill="#000" opacity=".3"/>
+      <!-- body -->
+      <path d="M30 100 q6 -34 40 -40 q20 -22 50 -22 q30 0 46 22 q26 4 34 40 Z" fill="#d33b52" stroke="#f4c95d" stroke-width="3"/>
+      <!-- roof stripe -->
+      <path d="M78 60 q40 -30 84 0" stroke="#fff" stroke-width="4" fill="none"/>
+      <!-- windows -->
+      <path d="M84 62 q26 -18 26 -18 l0 20 Z" fill="#bff0ff"/>
+      <path d="M118 44 q22 0 36 18 l-36 0 Z" fill="#bff0ff"/>
+      <!-- headlight eyes -->
+      <circle cx="46" cy="86" r="12" fill="#fff"/><circle cx="49" cy="88" r="5" fill="#111"/>
+      <circle cx="214" cy="86" r="10" fill="#ffd24a"/>
+      <!-- smile grille -->
+      <path d="M40 104 q90 26 180 0" stroke="#3a1400" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- wheels -->
+      <circle cx="80" cy="118" r="20" fill="#1a1a1a" stroke="#f4c95d" stroke-width="3"/><circle cx="80" cy="118" r="7" fill="#888"/>
+      <circle cx="188" cy="118" r="20" fill="#1a1a1a" stroke="#f4c95d" stroke-width="3"/><circle cx="188" cy="118" r="7" fill="#888"/>
+    </svg>
+    <p class="lead">Keys are handed over together with your student ID. Yes, there is <b>an exam every single day</b> — but you drive to class in your own Mini. A fair deal by Samarkand standards.</p>
+    <div class="badges">
+      <span class="badge">🔑 Keys on enrollment day</span>
+      <span class="badge">⛽ Fuel on the university</span>
+      <span class="badge">📝 Exam = 09:00 daily</span>
+    </div>
+  </section>
+
+  <section id="staff">
+    <h2 class="title">The <span class="accent">Legends</span> Faculty</h2>
+    <p class="lead">The icons who run the lectures at Remeslo.</p>
+    <div class="staffgrid">
+      <!-- Rector with crown -->
+      <div class="person">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="56" r="30" fill="#f2c79b"/><path d="M26 34 l8 12 8 -14 8 14 8 -12 6 16 -52 0 Z" fill="#f4c95d"/><g transform="translate(50,54)"><use href="#eyes-googly"/></g><path d="M40 70 q10 8 20 0" stroke="#7a3b16" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+        <div class="nm">Mikhail Litvin</div><div class="role">Rector</div>
+      </div>
+      <!-- Ronaldo with ball -->
+      <div class="person">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="48" r="26" fill="#e0a878"/><path d="M28 40 q22 -22 44 0 q-4 -20 -22 -20 q-18 0 -22 20Z" fill="#2b1a12"/><g transform="translate(50,46) scale(.9)"><use href="#eyes-googly"/></g><path d="M42 62 q8 6 16 0" stroke="#5a2d16" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="76" cy="82" r="14" fill="#fff" stroke="#111" stroke-width="2"/><path d="M76 72 l6 6 -3 9 -6 0 -3 -9Z" fill="#111"/></svg>
+        <div class="nm">Cristiano Ronaldo</div><div class="role">P.E. · SIUUU</div>
+      </div>
+      <!-- Mr Smile -->
+      <div class="person">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="#ffd24a"/><g transform="translate(50,44)"><use href="#eyes-googly"/></g><path d="M32 60 q18 22 36 0" stroke="#7a3b16" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+        <div class="nm">Mr. Smile</div><div class="role">Literature</div>
+      </div>
+      <!-- MrBeast with chocolate -->
+      <div class="person">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="48" r="26" fill="#e8b48c"/><path d="M26 42 q24 -24 48 0 q-2 -22 -24 -22 q-22 0 -24 22Z" fill="#5a3418"/><g transform="translate(50,46) scale(.9)"><use href="#eyes-googly"/></g><path d="M40 62 q10 8 20 0" stroke="#5a2d16" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="66" y="70" width="22" height="16" rx="2" fill="#5a3418" stroke="#f4c95d" stroke-width="1.5"/><path d="M72 70 v16 M78 70 v16 M66 78 h22" stroke="#f4c95d" stroke-width="1"/></svg>
+        <div class="nm">MrBeast</div><div class="role">Glass wool &amp; chocolate</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="profs">
+    <h2 class="title">Visiting <span class="accent">Professors</span></h2>
+    <p class="lead">Real-world masters lecturing at each faculty. Swap these for your own professors' names.</p>
+    <div class="staffgrid">
+      <div class="person"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="#f2c79b"/><path d="M24 44 q26 -26 52 0 q-4 -24 -26 -24 q-22 0 -26 24Z" fill="#d9d3cc"/><g transform="translate(50,48) scale(.9)"><use href="#eyes-googly"/></g><path d="M40 64 q10 -8 20 0" stroke="#7a3b16" stroke-width="3" fill="none" stroke-linecap="round"/></svg><div class="nm">Gordon Ramsay</div><div class="role">Culinary · Head Chef</div></div>
+      <div class="person"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="#e6b58f"/><path d="M26 44 q24 -22 48 0 q-2 -22 -24 -22 q-22 0 -24 22Z" fill="#1c1c1c"/><g transform="translate(50,48) scale(.9)"><use href="#eyes-googly"/></g><path d="M42 64 q8 6 16 0" stroke="#5a2d16" stroke-width="3" fill="none" stroke-linecap="round"/></svg><div class="nm">Terence Tao</div><div class="role">AMCS · Mathematics</div></div>
+      <div class="person"><svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="28" fill="#f2c79b"/><path d="M24 48 q26 -18 52 0 q0 -26 -26 -26 q-26 0 -26 26Z" fill="#e8e8e8"/><rect x="30" y="66" width="40" height="14" rx="7" fill="#d9d3cc"/><g transform="translate(50,50) scale(.85)"><use href="#eyes-googly"/></g></svg><div class="nm">Donald Knuth</div><div class="role">AMCS · Algorithms</div></div>
+      <div class="person"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="#e6b58f"/><path d="M26 44 q24 -22 48 0 q-2 -22 -24 -22 q-22 0 -24 22Z" fill="#111"/><g transform="translate(50,48) scale(.9)"><use href="#eyes-googly"/></g><path d="M42 64 q8 6 16 0" stroke="#5a2d16" stroke-width="3" fill="none" stroke-linecap="round"/></svg><div class="nm">Andrew Ng</div><div class="role">AMCS · Machine Learning</div></div>
+      <div class="person"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="#e6b58f"/><path d="M24 46 q26 -24 52 0 q-4 -24 -26 -24 q-22 0 -26 24Z" fill="#9c9c9c"/><g transform="translate(50,48) scale(.9)"><use href="#eyes-googly"/></g><path d="M34 62 q16 4 32 0" stroke="#9c9c9c" stroke-width="6" fill="none" stroke-linecap="round"/></svg><div class="nm">Stalik Khankishiev</div><div class="role">Tandyr · Master of Fire</div></div>
+      <div class="person"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="#f2c79b"/><path d="M24 46 q26 -22 52 0 q-4 -24 -26 -24 q-22 0 -26 24Z" fill="#cfc9c2"/><g transform="translate(50,48) scale(.9)"><use href="#eyes-googly"/></g><path d="M36 62 q14 4 28 0" stroke="#c9c2b8" stroke-width="7" fill="none" stroke-linecap="round"/></svg><div class="nm">Massimo Bottura</div><div class="role">Culinary · Fine Dining</div></div>
+    </div>
+    <span class="tag">EDIT THESE → add your real professors here</span>
+  </section>
+
+
+  <section id="play">
+    <h2 class="title">Play the <span class="accent">Game</span> 🎮</h2>
+    <p class="lead">The founder built a little game to celebrate Building 67. Scan the code with your phone camera and play.</p>
+    <div class="qrcard"><svg class="qrimg" viewBox="0 0 41 41" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" role="img" aria-label="QR to the game"><rect width="41" height="41" fill="#fff"/><g fill="#12081f"><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="13" y="4" width="1" height="1"/><rect x="14" y="4" width="1" height="1"/><rect x="17" y="4" width="1" height="1"/><rect x="20" y="4" width="1" height="1"/><rect x="22" y="4" width="1" height="1"/><rect x="23" y="4" width="1" height="1"/><rect x="24" y="4" width="1" height="1"/><rect x="25" y="4" width="1" height="1"/><rect x="27" y="4" width="1" height="1"/><rect x="28" y="4" width="1" height="1"/><rect x="30" y="4" width="1" height="1"/><rect x="31" y="4" width="1" height="1"/><rect x="32" y="4" width="1" height="1"/><rect x="33" y="4" width="1" height="1"/><rect x="34" y="4" width="1" height="1"/><rect x="35" y="4" width="1" height="1"/><rect x="36" y="4" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="13" y="5" width="1" height="1"/><rect x="15" y="5" width="1" height="1"/><rect x="17" y="5" width="1" height="1"/><rect x="19" y="5" width="1" height="1"/><rect x="20" y="5" width="1" height="1"/><rect x="21" y="5" width="1" height="1"/><rect x="23" y="5" width="1" height="1"/><rect x="24" y="5" width="1" height="1"/><rect x="25" y="5" width="1" height="1"/><rect x="26" y="5" width="1" height="1"/><rect x="27" y="5" width="1" height="1"/><rect x="30" y="5" width="1" height="1"/><rect x="36" y="5" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="17" y="6" width="1" height="1"/><rect x="19" y="6" width="1" height="1"/><rect x="22" y="6" width="1" height="1"/><rect x="23" y="6" width="1" height="1"/><rect x="26" y="6" width="1" height="1"/><rect x="27" y="6" width="1" height="1"/><rect x="30" y="6" width="1" height="1"/><rect x="32" y="6" width="1" height="1"/><rect x="33" y="6" width="1" height="1"/><rect x="34" y="6" width="1" height="1"/><rect x="36" y="6" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="14" y="7" width="1" height="1"/><rect x="19" y="7" width="1" height="1"/><rect x="20" y="7" width="1" height="1"/><rect x="21" y="7" width="1" height="1"/><rect x="23" y="7" width="1" height="1"/><rect x="24" y="7" width="1" height="1"/><rect x="27" y="7" width="1" height="1"/><rect x="28" y="7" width="1" height="1"/><rect x="30" y="7" width="1" height="1"/><rect x="32" y="7" width="1" height="1"/><rect x="33" y="7" width="1" height="1"/><rect x="34" y="7" width="1" height="1"/><rect x="36" y="7" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="10" y="8" width="1" height="1"/><rect x="12" y="8" width="1" height="1"/><rect x="15" y="8" width="1" height="1"/><rect x="16" y="8" width="1" height="1"/><rect x="19" y="8" width="1" height="1"/><rect x="22" y="8" width="1" height="1"/><rect x="26" y="8" width="1" height="1"/><rect x="27" y="8" width="1" height="1"/><rect x="30" y="8" width="1" height="1"/><rect x="32" y="8" width="1" height="1"/><rect x="33" y="8" width="1" height="1"/><rect x="34" y="8" width="1" height="1"/><rect x="36" y="8" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/><rect x="10" y="9" width="1" height="1"/><rect x="13" y="9" width="1" height="1"/><rect x="16" y="9" width="1" height="1"/><rect x="17" y="9" width="1" height="1"/><rect x="18" y="9" width="1" height="1"/><rect x="20" y="9" width="1" height="1"/><rect x="25" y="9" width="1" height="1"/><rect x="26" y="9" width="1" height="1"/><rect x="28" y="9" width="1" height="1"/><rect x="30" y="9" width="1" height="1"/><rect x="36" y="9" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="5" y="10" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="7" y="10" width="1" height="1"/><rect x="8" y="10" width="1" height="1"/><rect x="9" y="10" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/><rect x="12" y="10" width="1" height="1"/><rect x="14" y="10" width="1" height="1"/><rect x="16" y="10" width="1" height="1"/><rect x="18" y="10" width="1" height="1"/><rect x="20" y="10" width="1" height="1"/><rect x="22" y="10" width="1" height="1"/><rect x="24" y="10" width="1" height="1"/><rect x="26" y="10" width="1" height="1"/><rect x="28" y="10" width="1" height="1"/><rect x="30" y="10" width="1" height="1"/><rect x="31" y="10" width="1" height="1"/><rect x="32" y="10" width="1" height="1"/><rect x="33" y="10" width="1" height="1"/><rect x="34" y="10" width="1" height="1"/><rect x="35" y="10" width="1" height="1"/><rect x="36" y="10" width="1" height="1"/><rect x="12" y="11" width="1" height="1"/><rect x="13" y="11" width="1" height="1"/><rect x="14" y="11" width="1" height="1"/><rect x="16" y="11" width="1" height="1"/><rect x="17" y="11" width="1" height="1"/><rect x="19" y="11" width="1" height="1"/><rect x="20" y="11" width="1" height="1"/><rect x="21" y="11" width="1" height="1"/><rect x="22" y="11" width="1" height="1"/><rect x="23" y="11" width="1" height="1"/><rect x="28" y="11" width="1" height="1"/><rect x="6" y="12" width="1" height="1"/><rect x="7" y="12" width="1" height="1"/><rect x="10" y="12" width="1" height="1"/><rect x="11" y="12" width="1" height="1"/><rect x="12" y="12" width="1" height="1"/><rect x="15" y="12" width="1" height="1"/><rect x="16" y="12" width="1" height="1"/><rect x="17" y="12" width="1" height="1"/><rect x="20" y="12" width="1" height="1"/><rect x="23" y="12" width="1" height="1"/><rect x="25" y="12" width="1" height="1"/><rect x="27" y="12" width="1" height="1"/><rect x="28" y="12" width="1" height="1"/><rect x="29" y="12" width="1" height="1"/><rect x="30" y="12" width="1" height="1"/><rect x="32" y="12" width="1" height="1"/><rect x="4" y="13" width="1" height="1"/><rect x="11" y="13" width="1" height="1"/><rect x="12" y="13" width="1" height="1"/><rect x="13" y="13" width="1" height="1"/><rect x="18" y="13" width="1" height="1"/><rect x="22" y="13" width="1" height="1"/><rect x="23" y="13" width="1" height="1"/><rect x="25" y="13" width="1" height="1"/><rect x="27" y="13" width="1" height="1"/><rect x="29" y="13" width="1" height="1"/><rect x="30" y="13" width="1" height="1"/><rect x="33" y="13" width="1" height="1"/><rect x="34" y="13" width="1" height="1"/><rect x="36" y="13" width="1" height="1"/><rect x="6" y="14" width="1" height="1"/><rect x="10" y="14" width="1" height="1"/><rect x="11" y="14" width="1" height="1"/><rect x="13" y="14" width="1" height="1"/><rect x="14" y="14" width="1" height="1"/><rect x="16" y="14" width="1" height="1"/><rect x="17" y="14" width="1" height="1"/><rect x="18" y="14" width="1" height="1"/><rect x="19" y="14" width="1" height="1"/><rect x="20" y="14" width="1" height="1"/><rect x="21" y="14" width="1" height="1"/><rect x="27" y="14" width="1" height="1"/><rect x="28" y="14" width="1" height="1"/><rect x="29" y="14" width="1" height="1"/><rect x="30" y="14" width="1" height="1"/><rect x="34" y="14" width="1" height="1"/><rect x="35" y="14" width="1" height="1"/><rect x="36" y="14" width="1" height="1"/><rect x="5" y="15" width="1" height="1"/><rect x="6" y="15" width="1" height="1"/><rect x="11" y="15" width="1" height="1"/><rect x="16" y="15" width="1" height="1"/><rect x="17" y="15" width="1" height="1"/><rect x="19" y="15" width="1" height="1"/><rect x="20" y="15" width="1" height="1"/><rect x="22" y="15" width="1" height="1"/><rect x="23" y="15" width="1" height="1"/><rect x="26" y="15" width="1" height="1"/><rect x="28" y="15" width="1" height="1"/><rect x="31" y="15" width="1" height="1"/><rect x="32" y="15" width="1" height="1"/><rect x="36" y="15" width="1" height="1"/><rect x="7" y="16" width="1" height="1"/><rect x="8" y="16" width="1" height="1"/><rect x="9" y="16" width="1" height="1"/><rect x="10" y="16" width="1" height="1"/><rect x="14" y="16" width="1" height="1"/><rect x="17" y="16" width="1" height="1"/><rect x="18" y="16" width="1" height="1"/><rect x="19" y="16" width="1" height="1"/><rect x="20" y="16" width="1" height="1"/><rect x="21" y="16" width="1" height="1"/><rect x="22" y="16" width="1" height="1"/><rect x="24" y="16" width="1" height="1"/><rect x="25" y="16" width="1" height="1"/><rect x="32" y="16" width="1" height="1"/><rect x="33" y="16" width="1" height="1"/><rect x="35" y="16" width="1" height="1"/><rect x="4" y="17" width="1" height="1"/><rect x="7" y="17" width="1" height="1"/><rect x="9" y="17" width="1" height="1"/><rect x="12" y="17" width="1" height="1"/><rect x="13" y="17" width="1" height="1"/><rect x="19" y="17" width="1" height="1"/><rect x="22" y="17" width="1" height="1"/><rect x="24" y="17" width="1" height="1"/><rect x="25" y="17" width="1" height="1"/><rect x="29" y="17" width="1" height="1"/><rect x="31" y="17" width="1" height="1"/><rect x="34" y="17" width="1" height="1"/><rect x="4" y="18" width="1" height="1"/><rect x="5" y="18" width="1" height="1"/><rect x="6" y="18" width="1" height="1"/><rect x="8" y="18" width="1" height="1"/><rect x="9" y="18" width="1" height="1"/><rect x="10" y="18" width="1" height="1"/><rect x="12" y="18" width="1" height="1"/><rect x="13" y="18" width="1" height="1"/><rect x="14" y="18" width="1" height="1"/><rect x="17" y="18" width="1" height="1"/><rect x="18" y="18" width="1" height="1"/><rect x="20" y="18" width="1" height="1"/><rect x="22" y="18" width="1" height="1"/><rect x="24" y="18" width="1" height="1"/><rect x="25" y="18" width="1" height="1"/><rect x="28" y="18" width="1" height="1"/><rect x="30" y="18" width="1" height="1"/><rect x="31" y="18" width="1" height="1"/><rect x="32" y="18" width="1" height="1"/><rect x="5" y="19" width="1" height="1"/><rect x="6" y="19" width="1" height="1"/><rect x="7" y="19" width="1" height="1"/><rect x="8" y="19" width="1" height="1"/><rect x="11" y="19" width="1" height="1"/><rect x="12" y="19" width="1" height="1"/><rect x="14" y="19" width="1" height="1"/><rect x="16" y="19" width="1" height="1"/><rect x="17" y="19" width="1" height="1"/><rect x="18" y="19" width="1" height="1"/><rect x="19" y="19" width="1" height="1"/><rect x="20" y="19" width="1" height="1"/><rect x="22" y="19" width="1" height="1"/><rect x="23" y="19" width="1" height="1"/><rect x="24" y="19" width="1" height="1"/><rect x="25" y="19" width="1" height="1"/><rect x="26" y="19" width="1" height="1"/><rect x="27" y="19" width="1" height="1"/><rect x="30" y="19" width="1" height="1"/><rect x="31" y="19" width="1" height="1"/><rect x="34" y="19" width="1" height="1"/><rect x="4" y="20" width="1" height="1"/><rect x="5" y="20" width="1" height="1"/><rect x="6" y="20" width="1" height="1"/><rect x="7" y="20" width="1" height="1"/><rect x="10" y="20" width="1" height="1"/><rect x="11" y="20" width="1" height="1"/><rect x="12" y="20" width="1" height="1"/><rect x="13" y="20" width="1" height="1"/><rect x="15" y="20" width="1" height="1"/><rect x="16" y="20" width="1" height="1"/><rect x="21" y="20" width="1" height="1"/><rect x="22" y="20" width="1" height="1"/><rect x="25" y="20" width="1" height="1"/><rect x="27" y="20" width="1" height="1"/><rect x="28" y="20" width="1" height="1"/><rect x="29" y="20" width="1" height="1"/><rect x="30" y="20" width="1" height="1"/><rect x="32" y="20" width="1" height="1"/><rect x="33" y="20" width="1" height="1"/><rect x="34" y="20" width="1" height="1"/><rect x="36" y="20" width="1" height="1"/><rect x="4" y="21" width="1" height="1"/><rect x="6" y="21" width="1" height="1"/><rect x="7" y="21" width="1" height="1"/><rect x="9" y="21" width="1" height="1"/><rect x="13" y="21" width="1" height="1"/><rect x="15" y="21" width="1" height="1"/><rect x="16" y="21" width="1" height="1"/><rect x="20" y="21" width="1" height="1"/><rect x="22" y="21" width="1" height="1"/><rect x="23" y="21" width="1" height="1"/><rect x="26" y="21" width="1" height="1"/><rect x="27" y="21" width="1" height="1"/><rect x="30" y="21" width="1" height="1"/><rect x="32" y="21" width="1" height="1"/><rect x="34" y="21" width="1" height="1"/><rect x="35" y="21" width="1" height="1"/><rect x="36" y="21" width="1" height="1"/><rect x="4" y="22" width="1" height="1"/><rect x="6" y="22" width="1" height="1"/><rect x="10" y="22" width="1" height="1"/><rect x="12" y="22" width="1" height="1"/><rect x="14" y="22" width="1" height="1"/><rect x="16" y="22" width="1" height="1"/><rect x="18" y="22" width="1" height="1"/><rect x="20" y="22" width="1" height="1"/><rect x="26" y="22" width="1" height="1"/><rect x="32" y="22" width="1" height="1"/><rect x="34" y="22" width="1" height="1"/><rect x="35" y="22" width="1" height="1"/><rect x="7" y="23" width="1" height="1"/><rect x="9" y="23" width="1" height="1"/><rect x="11" y="23" width="1" height="1"/><rect x="13" y="23" width="1" height="1"/><rect x="15" y="23" width="1" height="1"/><rect x="17" y="23" width="1" height="1"/><rect x="19" y="23" width="1" height="1"/><rect x="21" y="23" width="1" height="1"/><rect x="22" y="23" width="1" height="1"/><rect x="23" y="23" width="1" height="1"/><rect x="24" y="23" width="1" height="1"/><rect x="26" y="23" width="1" height="1"/><rect x="30" y="23" width="1" height="1"/><rect x="31" y="23" width="1" height="1"/><rect x="35" y="23" width="1" height="1"/><rect x="36" y="23" width="1" height="1"/><rect x="4" y="24" width="1" height="1"/><rect x="6" y="24" width="1" height="1"/><rect x="8" y="24" width="1" height="1"/><rect x="9" y="24" width="1" height="1"/><rect x="10" y="24" width="1" height="1"/><rect x="11" y="24" width="1" height="1"/><rect x="13" y="24" width="1" height="1"/><rect x="16" y="24" width="1" height="1"/><rect x="18" y="24" width="1" height="1"/><rect x="19" y="24" width="1" height="1"/><rect x="22" y="24" width="1" height="1"/><rect x="23" y="24" width="1" height="1"/><rect x="24" y="24" width="1" height="1"/><rect x="25" y="24" width="1" height="1"/><rect x="26" y="24" width="1" height="1"/><rect x="33" y="24" width="1" height="1"/><rect x="34" y="24" width="1" height="1"/><rect x="4" y="25" width="1" height="1"/><rect x="5" y="25" width="1" height="1"/><rect x="7" y="25" width="1" height="1"/><rect x="8" y="25" width="1" height="1"/><rect x="9" y="25" width="1" height="1"/><rect x="13" y="25" width="1" height="1"/><rect x="15" y="25" width="1" height="1"/><rect x="17" y="25" width="1" height="1"/><rect x="19" y="25" width="1" height="1"/><rect x="20" y="25" width="1" height="1"/><rect x="22" y="25" width="1" height="1"/><rect x="25" y="25" width="1" height="1"/><rect x="26" y="25" width="1" height="1"/><rect x="27" y="25" width="1" height="1"/><rect x="28" y="25" width="1" height="1"/><rect x="29" y="25" width="1" height="1"/><rect x="30" y="25" width="1" height="1"/><rect x="34" y="25" width="1" height="1"/><rect x="35" y="25" width="1" height="1"/><rect x="36" y="25" width="1" height="1"/><rect x="6" y="26" width="1" height="1"/><rect x="8" y="26" width="1" height="1"/><rect x="10" y="26" width="1" height="1"/><rect x="11" y="26" width="1" height="1"/><rect x="12" y="26" width="1" height="1"/><rect x="15" y="26" width="1" height="1"/><rect x="16" y="26" width="1" height="1"/><rect x="17" y="26" width="1" height="1"/><rect x="18" y="26" width="1" height="1"/><rect x="19" y="26" width="1" height="1"/><rect x="21" y="26" width="1" height="1"/><rect x="25" y="26" width="1" height="1"/><rect x="27" y="26" width="1" height="1"/><rect x="30" y="26" width="1" height="1"/><rect x="31" y="26" width="1" height="1"/><rect x="36" y="26" width="1" height="1"/><rect x="5" y="27" width="1" height="1"/><rect x="6" y="27" width="1" height="1"/><rect x="8" y="27" width="1" height="1"/><rect x="9" y="27" width="1" height="1"/><rect x="14" y="27" width="1" height="1"/><rect x="15" y="27" width="1" height="1"/><rect x="16" y="27" width="1" height="1"/><rect x="18" y="27" width="1" height="1"/><rect x="19" y="27" width="1" height="1"/><rect x="20" y="27" width="1" height="1"/><rect x="22" y="27" width="1" height="1"/><rect x="23" y="27" width="1" height="1"/><rect x="29" y="27" width="1" height="1"/><rect x="31" y="27" width="1" height="1"/><rect x="33" y="27" width="1" height="1"/><rect x="35" y="27" width="1" height="1"/><rect x="36" y="27" width="1" height="1"/><rect x="4" y="28" width="1" height="1"/><rect x="7" y="28" width="1" height="1"/><rect x="9" y="28" width="1" height="1"/><rect x="10" y="28" width="1" height="1"/><rect x="11" y="28" width="1" height="1"/><rect x="14" y="28" width="1" height="1"/><rect x="15" y="28" width="1" height="1"/><rect x="16" y="28" width="1" height="1"/><rect x="18" y="28" width="1" height="1"/><rect x="21" y="28" width="1" height="1"/><rect x="24" y="28" width="1" height="1"/><rect x="26" y="28" width="1" height="1"/><rect x="28" y="28" width="1" height="1"/><rect x="29" y="28" width="1" height="1"/><rect x="30" y="28" width="1" height="1"/><rect x="31" y="28" width="1" height="1"/><rect x="32" y="28" width="1" height="1"/><rect x="35" y="28" width="1" height="1"/><rect x="12" y="29" width="1" height="1"/><rect x="13" y="29" width="1" height="1"/><rect x="15" y="29" width="1" height="1"/><rect x="17" y="29" width="1" height="1"/><rect x="18" y="29" width="1" height="1"/><rect x="21" y="29" width="1" height="1"/><rect x="22" y="29" width="1" height="1"/><rect x="25" y="29" width="1" height="1"/><rect x="27" y="29" width="1" height="1"/><rect x="28" y="29" width="1" height="1"/><rect x="32" y="29" width="1" height="1"/><rect x="4" y="30" width="1" height="1"/><rect x="5" y="30" width="1" height="1"/><rect x="6" y="30" width="1" height="1"/><rect x="7" y="30" width="1" height="1"/><rect x="8" y="30" width="1" height="1"/><rect x="9" y="30" width="1" height="1"/><rect x="10" y="30" width="1" height="1"/><rect x="12" y="30" width="1" height="1"/><rect x="16" y="30" width="1" height="1"/><rect x="18" y="30" width="1" height="1"/><rect x="19" y="30" width="1" height="1"/><rect x="20" y="30" width="1" height="1"/><rect x="21" y="30" width="1" height="1"/><rect x="22" y="30" width="1" height="1"/><rect x="25" y="30" width="1" height="1"/><rect x="27" y="30" width="1" height="1"/><rect x="28" y="30" width="1" height="1"/><rect x="30" y="30" width="1" height="1"/><rect x="32" y="30" width="1" height="1"/><rect x="34" y="30" width="1" height="1"/><rect x="4" y="31" width="1" height="1"/><rect x="10" y="31" width="1" height="1"/><rect x="13" y="31" width="1" height="1"/><rect x="18" y="31" width="1" height="1"/><rect x="21" y="31" width="1" height="1"/><rect x="22" y="31" width="1" height="1"/><rect x="23" y="31" width="1" height="1"/><rect x="27" y="31" width="1" height="1"/><rect x="28" y="31" width="1" height="1"/><rect x="32" y="31" width="1" height="1"/><rect x="34" y="31" width="1" height="1"/><rect x="35" y="31" width="1" height="1"/><rect x="36" y="31" width="1" height="1"/><rect x="4" y="32" width="1" height="1"/><rect x="6" y="32" width="1" height="1"/><rect x="7" y="32" width="1" height="1"/><rect x="8" y="32" width="1" height="1"/><rect x="10" y="32" width="1" height="1"/><rect x="14" y="32" width="1" height="1"/><rect x="16" y="32" width="1" height="1"/><rect x="19" y="32" width="1" height="1"/><rect x="23" y="32" width="1" height="1"/><rect x="26" y="32" width="1" height="1"/><rect x="27" y="32" width="1" height="1"/><rect x="28" y="32" width="1" height="1"/><rect x="29" y="32" width="1" height="1"/><rect x="30" y="32" width="1" height="1"/><rect x="31" y="32" width="1" height="1"/><rect x="32" y="32" width="1" height="1"/><rect x="34" y="32" width="1" height="1"/><rect x="35" y="32" width="1" height="1"/><rect x="4" y="33" width="1" height="1"/><rect x="6" y="33" width="1" height="1"/><rect x="7" y="33" width="1" height="1"/><rect x="8" y="33" width="1" height="1"/><rect x="10" y="33" width="1" height="1"/><rect x="12" y="33" width="1" height="1"/><rect x="13" y="33" width="1" height="1"/><rect x="15" y="33" width="1" height="1"/><rect x="16" y="33" width="1" height="1"/><rect x="17" y="33" width="1" height="1"/><rect x="19" y="33" width="1" height="1"/><rect x="21" y="33" width="1" height="1"/><rect x="22" y="33" width="1" height="1"/><rect x="26" y="33" width="1" height="1"/><rect x="28" y="33" width="1" height="1"/><rect x="31" y="33" width="1" height="1"/><rect x="33" y="33" width="1" height="1"/><rect x="34" y="33" width="1" height="1"/><rect x="35" y="33" width="1" height="1"/><rect x="36" y="33" width="1" height="1"/><rect x="4" y="34" width="1" height="1"/><rect x="6" y="34" width="1" height="1"/><rect x="7" y="34" width="1" height="1"/><rect x="8" y="34" width="1" height="1"/><rect x="10" y="34" width="1" height="1"/><rect x="12" y="34" width="1" height="1"/><rect x="13" y="34" width="1" height="1"/><rect x="14" y="34" width="1" height="1"/><rect x="15" y="34" width="1" height="1"/><rect x="17" y="34" width="1" height="1"/><rect x="18" y="34" width="1" height="1"/><rect x="23" y="34" width="1" height="1"/><rect x="24" y="34" width="1" height="1"/><rect x="25" y="34" width="1" height="1"/><rect x="26" y="34" width="1" height="1"/><rect x="27" y="34" width="1" height="1"/><rect x="28" y="34" width="1" height="1"/><rect x="29" y="34" width="1" height="1"/><rect x="30" y="34" width="1" height="1"/><rect x="4" y="35" width="1" height="1"/><rect x="10" y="35" width="1" height="1"/><rect x="13" y="35" width="1" height="1"/><rect x="16" y="35" width="1" height="1"/><rect x="18" y="35" width="1" height="1"/><rect x="20" y="35" width="1" height="1"/><rect x="22" y="35" width="1" height="1"/><rect x="23" y="35" width="1" height="1"/><rect x="26" y="35" width="1" height="1"/><rect x="28" y="35" width="1" height="1"/><rect x="29" y="35" width="1" height="1"/><rect x="30" y="35" width="1" height="1"/><rect x="36" y="35" width="1" height="1"/><rect x="4" y="36" width="1" height="1"/><rect x="5" y="36" width="1" height="1"/><rect x="6" y="36" width="1" height="1"/><rect x="7" y="36" width="1" height="1"/><rect x="8" y="36" width="1" height="1"/><rect x="9" y="36" width="1" height="1"/><rect x="10" y="36" width="1" height="1"/><rect x="15" y="36" width="1" height="1"/><rect x="16" y="36" width="1" height="1"/><rect x="19" y="36" width="1" height="1"/><rect x="21" y="36" width="1" height="1"/><rect x="22" y="36" width="1" height="1"/><rect x="23" y="36" width="1" height="1"/><rect x="26" y="36" width="1" height="1"/><rect x="29" y="36" width="1" height="1"/><rect x="30" y="36" width="1" height="1"/><rect x="31" y="36" width="1" height="1"/><rect x="32" y="36" width="1" height="1"/><rect x="34" y="36" width="1" height="1"/></g></svg></div>
+    <div class="qrurl">https://game67676767.vercel.app/</div>
+    <a class="playbtn" href="https://game67676767.vercel.app/" target="_blank" rel="noopener">▶ Open the game</a>
+  </section>
+
+  <section id="boss">
+    <h2 class="title">Final <span class="accent">Boss</span></h2>
+    <p class="lead">In charge of student recruitment. Defeat him and admissions open.</p>
+    <!-- Funny boss monster -->
+    <svg class="boss-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="182" rx="70" ry="10" fill="#000" opacity=".3"/>
+      <path d="M40 120 q-20 -20 -6 -40 q-18 -6 -6 -26 q22 6 26 22 q20 -24 52 -24 q32 0 52 24 q4 -16 26 -22 q12 20 -6 26 q14 20 -6 40 q10 40 -66 40 q-76 0 -66 -40Z" fill="#7b2d8e" stroke="#f4c95d" stroke-width="3"/>
+      <!-- angry eyes -->
+      <circle cx="76" cy="104" r="16" fill="#fff"/><circle cx="124" cy="104" r="16" fill="#fff"/>
+      <circle cx="80" cy="108" r="7" fill="#111"/><circle cx="120" cy="108" r="7" fill="#111"/>
+      <path d="M60 90 l28 10 M140 90 l-28 10" stroke="#f4c95d" stroke-width="4" stroke-linecap="round"/>
+      <!-- mouth with teeth -->
+      <path d="M70 138 q30 26 60 0 Z" fill="#3a0f22"/>
+      <path d="M74 138 l6 12 6 -12 6 12 6 -12 6 12 6 -12 6 12 6 -12" fill="#fff"/>
+    </svg>
+    <div class="bossname">BRYMDYSHCH</div>
+    <div class="hpbar"><div class="hp" id="hp"></div></div>
+    <div class="bosslog" id="bosslog">HP: 100 / 100</div>
+    <button class="fightbtn" id="fight">⚔️ ATTACK with plov</button>
+  </section>
+
+
+  <section id="stats">
+    <h2 class="title">Remeslo <span class="accent">by the Numbers</span></h2>
+    <p class="lead">The receipts. (Diamonds not included in GDP.)</p>
+    <div class="statgrid">
+      <div class="stat"><div class="n">67</div><div class="l">Floors in the main building — one per lucky number</div></div>
+      <div class="stat"><div class="n">365</div><div class="l">Exams per year. Yes, even on your birthday.</div></div>
+      <div class="stat"><div class="n">∞</div><div class="l">Liters of plov served from the eternal kazan</div></div>
+      <div class="stat"><div class="n">1:1</div><div class="l">Student-to-Mini-Cooper ratio</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">Faculties: Tandyr · Culinary · AMCS</div></div>
+      <div class="stat"><div class="n">700</div><div class="l">Daily sit-ups in Professor Ronaldo's warm-up</div></div>
+      <div class="stat"><div class="n">12,000</div><div class="l">Diamonds embedded in the Grand Hall walls</div></div>
+      <div class="stat"><div class="n">0 ₸</div><div class="l">Tuition. The only currency here is effort.</div></div>
+    </div>
+  </section>
+
+  <section id="facts">
+    <h2 class="title">Insider <span class="accent">Facts</span></h2>
+    <p class="lead">Things they don't put in the brochure.</p>
+    <div class="factlist">
+      <div class="fact"><span class="ic">🕌</span><span class="tx"><b>The "6" faces Mecca, the "7" faces the sunset</b> — so the whole campus glows gold twice a day and smells of bread once.</span></div>
+      <div class="fact"><span class="ic">🍚</span><span class="tx"><b>The kazan has never been cleaned.</b> Chefs insist the 40-year crust <i>is</i> the flavor. Health inspectors were fed plov and left smiling.</span></div>
+      <div class="fact"><span class="ic">💎</span><span class="tx"><b>Your diamond stipend is real</b> — but the campus jeweler buys them back at a "friendly" rate. Somehow everyone stays broke by Friday.</span></div>
+      <div class="fact"><span class="ic">🚗</span><span class="tx"><b>All Mini Coopers are the same shade of pomegranate red.</b> Lose yours in the parking lot and it becomes a genuine AMCS search-algorithm exam.</span></div>
+      <div class="fact"><span class="ic">📝</span><span class="tx"><b>The 09:00 exam has one legendary question</b> that reappears every leap year: "How much plov is enough?" The only correct answer is "more".</span></div>
+      <div class="fact"><span class="ic">👹</span><span class="tx"><b>Brymdyshch isn't evil</b> — he's just really, really good at recruitment quotas. Beat him once and he personally hand-delivers your acceptance letter.</span></div>
+      <div class="fact"><span class="ic">🍫</span><span class="tx"><b>MrBeast's "Glass Wool & Chocolate" lab</b> is the highest-rated elective. Nobody remembers what glass wool has to do with anything, but the chocolate is unlimited.</span></div>
+    </div>
+  </section>
+
+  <footer>REMESLO · حرفة · Samarkand · Building "67" · plov ∞ · diamonds ∞ <br>presentation game · navigate with arrow keys or scroll</footer>
+</main>
+<script>
+  const sections=[...document.querySelectorAll('section')];
+  const dotsWrap=document.getElementById('dots');
+  sections.forEach((s,i)=>{const d=document.createElement('button');d.className='dot'+(i===0?' on':'');d.onclick=()=>s.scrollIntoView({behavior:'smooth'});dotsWrap.appendChild(d);});
+  const dots=[...document.querySelectorAll('.dot')];
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const i=sections.indexOf(e.target);dots.forEach((d,k)=>d.classList.toggle('on',k===i));}});},{threshold:.5});
+  sections.forEach(s=>io.observe(s));
+  let cur=0;
+  function go(n){cur=Math.max(0,Math.min(sections.length-1,n));sections[cur].scrollIntoView({behavior:'smooth'});}
+  window.addEventListener('keydown',e=>{if(['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1);}if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1);}});
+  const io2=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)cur=sections.indexOf(e.target);});},{threshold:.6});
+  sections.forEach(s=>io2.observe(s));
+  let hp=100;
+  const hpEl=document.getElementById('hp');const logEl=document.getElementById('bosslog');
+  const hits=['🍚 Plov strike! -14','💎 Diamond volley! -18','🔥 Tandyr blast! -12','⚽ SIUUU shot! -16','🟤 Churchkhela whip! -13'];
+  document.getElementById('fight').onclick=()=>{
+    if(hp<=0)return;
+    const dmg=[14,18,12,16,13][Math.floor(Math.random()*5)];
+    hp=Math.max(0,hp-dmg);hpEl.style.width=hp+'%';
+    logEl.textContent=hits.find(h=>h.includes('-'+dmg))+'  ·  HP: '+hp+' / 100';
+    if(hp<=0){logEl.innerHTML='🎉 BRYMDYSHCH defeated! Admissions to REMESLO are OPEN! 🎉';confetti();}
+  };
+  function confetti(){
+    const em=['💎','🍚','🚗','🟤','🔥','⭐','👑'];
+    for(let i=0;i<70;i++){
+      const c=document.createElement('div');c.className='confetti';c.textContent=em[Math.floor(Math.random()*em.length)];
+      c.style.left=Math.random()*100+'vw';c.style.fontSize=(16+Math.random()*22)+'px';document.body.appendChild(c);
+      const dur=2200+Math.random()*2200;
+      c.animate([{transform:'translateY(-20px) rotate(0)',opacity:1},{transform:'translateY('+(window.innerHeight+60)+'px) rotate('+(720*(Math.random()>.5?1:-1))+'deg)',opacity:.9}],{duration:dur,easing:'ease-in'});
+      setTimeout(()=>c.remove(),dur);
+    }
+  }
+</script>
+</body>
+</html>
